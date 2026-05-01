@@ -3,6 +3,7 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 PLAN.md
+SPRINTS.md
 
 ### STS ###
 .apt_generated
@@ -70,7 +71,7 @@ logs/
 *.backup
 
 ### Database ###
-*.sql
+#*.sql
 *.dump
 
 ### Reports ###
