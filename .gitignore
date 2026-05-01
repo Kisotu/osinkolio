@@ -1,0 +1,79 @@
+/HELP.md
+/.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+PLAN.md
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+### Docker ###
+docker-compose.override.yml
+*.log
+
+### Environment ###
+.env
+.env.local
+.env.*.local
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Logs ###
+*.log
+logs/
+
+### IDE ###
+*.swp
+*.swo
+*~
+
+### Temporary files ###
+*.tmp
+*.temp
+*.bak
+*.backup
+
+### Database ###
+*.sql
+*.dump
+
+### Reports ###
+*.pdf
+*.html
+/target/site/
