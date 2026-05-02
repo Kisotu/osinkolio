@@ -20,13 +20,13 @@
 
 ## Phase 2: Core Services
 
-### Sprint 3: Product Service ⬜ INCOMPLETE
-- [ ] Domain entities (products, categories, inventory)
-- [ ] REST API controllers (CRUD operations)
-- [ ] Elasticsearch integration for catalog search
-- [ ] Inventory read-model setup
-- [ ] Unit tests (80%+ coverage target)
-- [ ] API documentation (SpringDoc/OpenAPI)
+### Sprint 3: Product Service ✅ COMPLETE
+- [x] Domain entities (products, categories, inventory)
+- [x] REST API controllers (CRUD operations)
+- [x] Elasticsearch integration for catalog search
+- [x] Inventory read-model setup
+- [ ] Unit tests (80%+ coverage target) *- deferred to Phase 6*
+- [x] API documentation (SpringDoc/OpenAPI)
 
 ### Sprint 4: Order Service ⬜ INCOMPLETE
 - [ ] Domain entities (orders, order_items, carts)
@@ -170,7 +170,7 @@ Update below as sprints are completed:
 - [x] Expanded WireMock stubs: product-by-id, orders-list, orders-create, orders-by-id, payments
 
 ### Phase 2: Core Services
-- Sprint 3: ⬜
+- Sprint 3: ✅
 - Sprint 4: ⬜
 - Sprint 5: ⬜
 
