@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/v1/payments"
+  },
+  "response": {
+    "status": 201,
+    "jsonBody": {
+      "id": 1,
+      "orderId": 1,
+      "amount": 2198.99,
+      "status": "COMPLETED",
+      "paymentMethod": "VISA",
+      "transactionId": "txn_abc123def456",
+      "createdAt": "2025-01-15T10:30:05Z"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

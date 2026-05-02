@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/api/v1/products/[0-9]+"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "id": 1,
+      "sku": "GTR-001",
+      "name": "Fender Stratocaster",
+      "description": "Classic electric guitar with alder body and maple neck",
+      "category": "Electric Guitars",
+      "brand": "Fender",
+      "price": 1299.99,
+      "weight": 3.5,
+      "images": ["https://example.com/images/stratocaster.jpg"]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

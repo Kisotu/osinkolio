@@ -1,0 +1,63 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v1/products"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "content": [
+        {
+          "id": 1,
+          "sku": "GTR-001",
+          "name": "Fender Stratocaster",
+          "description": "Classic electric guitar with alder body and maple neck",
+          "category": "Electric Guitars",
+          "brand": "Fender",
+          "price": 1299.99,
+          "weight": 3.5,
+          "images": ["https://example.com/images/stratocaster.jpg"]
+        },
+        {
+          "id": 2,
+          "sku": "PNO-001",
+          "name": "Yamaha YDP-145",
+          "description": "Digital piano with weighted keys and premium sound engine",
+          "category": "Digital Pianos",
+          "brand": "Yamaha",
+          "price": 899.00,
+          "weight": 25.0,
+          "images": ["https://example.com/images/ydp145.jpg"]
+        }
+      ],
+      "pageable": {
+        "sort": {
+          "empty": true,
+          "sorted": false,
+          "unsorted": true
+        },
+        "offset": 0,
+        "pageNumber": 0,
+        "pageSize": 20,
+        "paged": true,
+        "unpaged": false
+      },
+      "totalPages": 1,
+      "totalElements": 2,
+      "last": true,
+      "size": 20,
+      "number": 0,
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "first": true,
+      "numberOfElements": 2,
+      "empty": false
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
