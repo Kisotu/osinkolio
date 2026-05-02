@@ -1,0 +1,12 @@
+spring:
+  flyway:
+    enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    com.musicstore: DEBUG
+    org.springframework.web: INFO
