@@ -1,0 +1,137 @@
+version: '3.8'
+
+services:
+  postgres:
+    extends:
+      file: docker-compose.yml
+      service: postgres
+  kafka:
+    extends:
+      file: docker-compose.yml
+      service: kafka
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis
+  elasticsearch:
+    extends:
+      file: docker-compose.yml
+      service: elasticsearch
+  kibana:
+    extends:
+      file: docker-compose.yml
+      service: kibana
+  mailpit:
+    extends:
+      file: docker-compose.yml
+      service: mailpit
+
+  # Service configurations for development
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      # Uncomment the following line to use JRebel instead of DevTools for faster hot reload
+      # JAVA_TOOL_OPTIONS: "-javaagent:/opt/jrebel/jrebel.jar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5005:5005"
+      - "8081:8080"
+    volumes:
+      - ./product-service/src:/app/src
+      - ./product-service/target:/app/target
+      - ~/.m2:/root/.m2
+      # Uncomment the following line to mount JRebel (if installed)
+      # - /opt/jrebel:/opt/jrebel
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5006:5005"
+      - "8082:8080"
+    volumes:
+      - ./order-service/src:/app/src
+      - ./order-service/target:/app/target
+      - ~/.m2:/root/.m2
+
+  payment-service:
+    build:
+      context: ./payment-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5007:5005"
+      - "8083:8080"
+    volumes:
+      - ./payment-service/src:/app/src
+      - ./payment-service/target:/app/target
+      - ~/.m2:/root/.m2
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5008:5005"
+      - "8084:8080"
+    volumes:
+      - ./user-service/src:/app/src
+      - ./user-service/target:/app/target
+      - ~/.m2:/root/.m2
+
+  inventory-service:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5009"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5009:5005"
+      - "8085:8086"
+    volumes:
+      - ./inventory-service/src:/app/src
+      - ./inventory-service/target:/app/target
+      - ~/.m2:/root/.m2
+
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5010"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5010:5005"
+      - "8086:8085"
+    volumes:
+      - ./notification-service/src:/app/src
+      - ./notification-service/target:/app/target
+      - ~/.m2:/root/.m2
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile.dev
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5011"
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "5011:5005"
+      - "8087:8080"
+    volumes:
+      - ./api-gateway/src:/app/src
+      - ./api-gateway/target:/app/target
+      - ~/.m2:/root/.m2
