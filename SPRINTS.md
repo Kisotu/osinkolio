@@ -171,7 +171,7 @@ Update below as sprints are completed:
 
 ### Phase 2: Core Services
 - Sprint 3: ✅
-- Sprint 4: ⬜
+- Sprint 4: ✅
 - Sprint 5: ⬜
 
 ### Phase 3: Event-Driven & Auth
