@@ -9,6 +9,7 @@ import com.musicstore.product.domain.entity.Product;
 import com.musicstore.product.domain.repository.CategoryRepository;
 import com.musicstore.product.domain.repository.InventoryRepository;
 import com.musicstore.product.domain.repository.ProductRepository;
+import com.musicstore.product.kafka.ProductEventProducer;
 import com.musicstore.product.search.service.ProductIndexService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class ProductService {
     private final InventoryRepository inventoryRepository;
     private final ProductIndexService indexService;
     private final ProductMapper mapper;
+    private final ProductEventProducer eventProducer;
 
     @Transactional(readOnly = true)
     public Page<ProductResponse> getAll(Pageable pageable) {
@@ -82,6 +84,8 @@ public class ProductService {
         inventoryRepository.save(inventory);
 
         indexService.indexProduct(saved);
+
+        eventProducer.publishProductCreated(saved);
 
         return mapper.toResponse(saved);
     }

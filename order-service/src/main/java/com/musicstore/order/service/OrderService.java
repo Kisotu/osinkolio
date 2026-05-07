@@ -3,6 +3,7 @@ package com.musicstore.order.service;
 import com.musicstore.order.api.v1.dto.*;
 import com.musicstore.order.domain.entity.*;
 import com.musicstore.order.domain.repository.OrderRepository;
+import com.musicstore.order.kafka.OrderEventProducer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderEventProducer orderEventProducer;
 
     @Transactional
     public OrderResponse createOrder(OrderRequest request) {
@@ -54,6 +56,8 @@ public class OrderService {
         order.recalculateTotal();
         Order savedOrder = orderRepository.save(order);
         log.info("Order created with number: {}", savedOrder.getOrderNumber());
+
+        orderEventProducer.publishOrderCreated(mapToOrderResponse(savedOrder));
 
         return mapToOrderResponse(savedOrder);
     }
