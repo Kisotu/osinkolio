@@ -5,6 +5,7 @@ import com.musicstore.payment.domain.entity.Payment;
 import com.musicstore.payment.domain.entity.PaymentMethod;
 import com.musicstore.payment.domain.entity.PaymentStatus;
 import com.musicstore.payment.domain.repository.PaymentRepository;
+import com.musicstore.payment.kafka.PaymentEventProducer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,6 +29,7 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PspSimulator pspSimulator;
+    private final PaymentEventProducer eventProducer;
 
     @Transactional
     public PaymentResponse createPayment(PaymentRequest request) {
@@ -63,6 +66,14 @@ public class PaymentService {
         }
 
         Payment finalPayment = paymentRepository.save(savedPayment);
+
+        // Publish payment event based on result
+        if (finalPayment.getStatus() == PaymentStatus.COMPLETED) {
+            eventProducer.publishPaymentCompleted(finalPayment);
+        } else if (finalPayment.getStatus() == PaymentStatus.FAILED) {
+            eventProducer.publishPaymentFailed(finalPayment);
+        }
+
         return mapToPaymentResponse(finalPayment);
     }
 
@@ -135,6 +146,13 @@ public class PaymentService {
         }
 
         Payment savedPayment = paymentRepository.save(payment);
+
+        if (savedPayment.getStatus() == PaymentStatus.COMPLETED) {
+            eventProducer.publishPaymentCompleted(savedPayment);
+        } else if (savedPayment.getStatus() == PaymentStatus.FAILED) {
+            eventProducer.publishPaymentFailed(savedPayment);
+        }
+
         return mapToPaymentResponse(savedPayment);
     }
 
@@ -163,6 +181,13 @@ public class PaymentService {
         }
 
         Payment savedPayment = paymentRepository.save(payment);
+
+        if (savedPayment.getStatus() == PaymentStatus.COMPLETED) {
+            eventProducer.publishPaymentCompleted(savedPayment);
+        } else if (savedPayment.getStatus() == PaymentStatus.FAILED) {
+            eventProducer.publishPaymentFailed(savedPayment);
+        }
+
         return mapToPaymentResponse(savedPayment);
     }
 

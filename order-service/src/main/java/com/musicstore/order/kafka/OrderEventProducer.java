@@ -7,6 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Kafka producer for order-related events.
  * Emits events when orders are created, updated, or cancelled.
@@ -18,7 +23,6 @@ import org.springframework.stereotype.Component;
 public class OrderEventProducer {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final ObjectMapper objectMapper;
 
     public static final String ORDER_CREATED_TOPIC = "order.created";
     public static final String ORDER_CANCELLED_TOPIC = "order.cancelled";
@@ -26,7 +30,21 @@ public class OrderEventProducer {
 
     public void publishOrderCreated(OrderResponse order) {
         log.info("Publishing order.created event for order: {}", order.id());
-        kafkaTemplate.send(ORDER_CREATED_TOPIC, String.valueOf(order.id()), order)
+        Map<String, Object> event = Map.of(
+                "orderId", order.id(),
+                "userId", order.userId(),
+                "status", order.status().name(),
+                "items", order.items().stream()
+                        .map(item -> Map.<String, Object>of(
+                                "productId", item.productId(),
+                                "productName", item.productName(),
+                                "quantity", item.quantity(),
+                                "unitPrice", item.unitPrice()
+                        )).toList(),
+                "totalAmount", order.totalAmount(),
+                "timestamp", Instant.now().toString()
+        );
+        kafkaTemplate.send(ORDER_CREATED_TOPIC, String.valueOf(order.id()), event)
                 .whenComplete((result, ex) -> {
                     if (ex != null) {
                         log.error("Failed to publish order.created event: {}", ex.getMessage());
