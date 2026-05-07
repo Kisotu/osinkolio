@@ -35,12 +35,12 @@
 - [ ] Order lifecycle management
 - [ ] JSONB cart storage
 
-### Sprint 5: Payment Service ⬜ INCOMPLETE
-- [ ] Payment domain entity
-- [ ] PSP integration (Stripe/PayPal simulation)
-- [ ] Payment status management
-- [ ] Transaction tracking
-- [ ] Idempotency key handling
+### Sprint 5: Payment Service ✅ COMPLETE
+- [x] Payment domain entity (Payment, PaymentStatus, PaymentMethod)
+- [x] PSP integration (Stripe/PayPal simulation via PspSimulator)
+- [x] Payment status management (PENDING → PROCESSING → COMPLETED/FAILED/REFUNDED)
+- [x] Transaction tracking (transactionId generation from PSP)
+- [x] Idempotency key handling (PaymentRepository.findByIdempotencyKey)
 
 ---
 
@@ -172,7 +172,7 @@ Update below as sprints are completed:
 ### Phase 2: Core Services
 - Sprint 3: ✅
 - Sprint 4: ✅
-- Sprint 5: ⬜
+- Sprint 5: ✅
 
 ### Phase 3: Event-Driven & Auth
 - Sprint 6: ⬜
